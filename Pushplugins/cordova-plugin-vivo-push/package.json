@@ -1,0 +1,17 @@
+{
+  "name": "cordova-plugin-vivo-push",
+  "version": "1.0.0",
+  "description": "",
+  "cordova": {
+    "id": "cordova-plugin-vivo-push",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "pierresh",
+  "license": "ISC"
+}

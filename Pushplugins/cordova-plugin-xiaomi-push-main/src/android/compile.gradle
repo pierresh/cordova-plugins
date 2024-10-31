@@ -1,0 +1,13 @@
+dependencies {
+    implementation fileTree(include: ['*.jar'],   dir: 'libs')
+
+    implementation   files("libs/MiPush_SDK_Client_5_9_9-C_3rd.aar")
+}
+
+android {
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+}

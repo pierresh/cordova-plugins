@@ -1,0 +1,17 @@
+{
+  "name": "com.shadowhunter.push.local",
+  "version": "1.0.0",
+  "description": "Loacl Notification",
+  "cordova": {
+    "id": "com.shadowhunter.push.local",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "343622685@qq.com",
+  "license": "ISC"
+}

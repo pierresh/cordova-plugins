@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-oppo-push" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>cordova-plugin-oppo-push</name>
+    <description>Cordova OPPO Push Plugin</description>
+    <author>350561378@qq.com</author>
+    <license>Apache License</license>
+    <keywords>cordova,oppo,push</keywords>
+
+    <preference name="APP_KEY" />
+    <preference name="APP_SECRET" />
+
+    <engines>
+        <engine name="cordova" version=">=3.0" />
+    </engines>
+
+    <js-module name="OppoPush" src="www/oppo-push.js">
+        <clobbers target="oppoPush" />
+    </js-module>
+
+    <platform name="android">
+        <!--cordova桥接-->
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="OppoPushPlugin">
+                <param name="android-package" value="com.lifang123.push.OppoPush" />
+            </feature>
+        </config-file>
+        <!--权限-->
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="com.coloros.mcs.permission.RECIEVE_MCS_MESSAGE" />
+            <uses-permission android:name="com.heytap.mcs.permission.RECIEVE_MCS_MESSAGE" />
+            <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+        </config-file>
+        <!--添加服务-->
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <!--兼容Q以下版本-->
+            <service android:exported="true" android:name="com.lifang123.push.oppo.service.PushMessageService" android:permission="com.coloros.mcs.permission.SEND_MCS_MESSAGE">
+                <intent-filter>
+                    <action android:name="com.coloros.mcs.action.RECEIVE_MCS_MESSAGE" />
+                </intent-filter>
+            </service>
+
+            <!--兼容Q版本-->
+            <service android:exported="true" android:name="com.lifang123.push.oppo.service.AppPushMessageService" android:permission="com.heytap.mcs.permission.SEND_PUSH_MESSAGE">
+                <intent-filter>
+                    <action android:name="com.heytap.mcs.action.RECEIVE_MCS_MESSAGE" />
+                    <action android:name="com.heytap.msp.push.RECEIVE_MCS_MESSAGE" />
+                </intent-filter>
+            </service>
+
+            <meta-data android:name="OPPOPUSH_APPSECRET" android:value="$APP_SECRET" />
+            <meta-data android:name="OPPOPUSH_APPKEY" android:value="$APP_KEY" />
+        </config-file>
+        <!-- arr引用 -->
+        <lib-file src="src/android/com.heytap.msp_3.4.0.aar" />
+        <!--gradle-->
+        <framework src="src/android/compile.gradle" custom="true" type="gradleReference" />
+        <!--java-->
+        <source-file src="src/android/OppoPush.java" target-dir="src/com/lifang123/push/" />
+        <source-file src="src/android/oppo/service/AppPushMessageService.java" target-dir="src/com/lifang123/push/oppo/service/" />
+        <source-file src="src/android/oppo/service/PushMessageService.java" target-dir="src/com/lifang123/push/oppo/service/" />
+        <source-file src="src/android/oppo/MessageDispatcher.java" target-dir="src/com/lifang123/push/oppo/" />
+    </platform>
+
+
+</plugin>

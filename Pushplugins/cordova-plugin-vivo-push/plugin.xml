@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-vivo-push"
+    version="0.0.1"
+    xmlns="http://apache.org/cordova/ns/plugins/1.0">
+    <name>cordova-plugin-vivo-push</name>
+    <description>Cordova Vivo Push Plugin</description>
+    <author>343622685@qq.com</author>
+    <license>Apache License</license>
+    <preference name="APP_KEY" />
+    <preference name="APP_ID" />
+    <js-module name="VivoPush" src="www/cordova-plugin-vivo-push.js">
+        <clobbers target="VivoPush" />
+    </js-module>
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="VivoPush">
+                <param name="android-package" value="com.shadowhunter.push.vivo.VivoPush" />
+            </feature>
+        </config-file>
+        <!--权限-->
+        <config-file parent="/manifest" target="AndroidManifest.xml">
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="com.vivo.notification.permission.BADGE_ICON" />
+            <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+        </config-file>
+        <!--添加服务-->
+        <config-file parent="/manifest/application" target="AndroidManifest.xml">
+            <meta-data android:name="com.vivo.push.api_key" android:value="$APP_KEY" />
+
+            <meta-data android:name="com.vivo.push.app_id" android:value="$APP_ID" />
+
+
+            <!--该版本开始优化了点击启动方案
+                   之前方案：点击先拉起业务方CommandService or CommandClientService， 导致启动界面视觉效果很慢， 因为是service拉起activity，还有可能被系统拦截
+                   优化方案：点击直接拉起业务Activity。 视觉效果会好很多。同时不会被系统拦截-->
+            <meta-data android:name="sdk_version_vivo" android:value="488" />
+
+            <!-- push应用定义消息receiver声明 -->
+
+            <receiver android:name="com.shadowhunter.push.vivo.PushMessageReceiverImpl"
+                android:exported="false">
+                <intent-filter>
+                    <!-- 接收push消息 -->
+                    <action android:name="com.vivo.pushclient.action.RECEIVE" />
+                </intent-filter>
+            </receiver>
+
+            <service android:name="com.vivo.push.sdk.service.CommandClientService"
+                android:exported="true" android:permission="com.push.permission.UPSTAGESERVICE" />
+        </config-file>
+        <!-- arr引用 -->
+        <lib-file src="src/android/vivo_pushSDK_v3.0.0.7_488.aar" />
+        <!--gradle-->
+        <framework custom="true" src="src/android/compile.gradle" type="gradleReference" />
+        <source-file src="src/android/VivoPush.java" target-dir="src/com/shadowhunter/push/vivo/" />
+        <source-file src="src/android/PushMessageReceiverImpl.java"
+            target-dir="src/com/shadowhunter/push/vivo/" />
+    </platform>
+</plugin>
