@@ -1,0 +1,11 @@
+
+dependencies {
+    implementation 'com.hihonor.mcs:push:8.0.12.307'
+}
+android {
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+}

@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-honor-push" version="1.0.0"
+    xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>cordova-plugin-honor-push</name>
+    <description>Cordova Honor Push Plugin</description>
+    <author>343622685@qq.com</author>
+    <license>Apache License</license>
+    <preference name="APP_ID" />
+    <js-module name="HonorPush" src="www/cordova-plugin-honor-push.js">
+        <clobbers target="HonorPush" />
+    </js-module>
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="HonorPush">
+                <param name="android-package"
+                    value="com.shadowhunter.push.honor.HonorPush" />
+            </feature>
+        </config-file>
+        <!--权限-->
+        <config-file parent="/manifest" target="AndroidManifest.xml">
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+            <queries>
+                <intent>
+                    <action android:name="com.hihonor.push.action.BIND_PUSH_SERVICE" />
+                </intent>
+            </queries>
+        </config-file>
+        <!--添加服务-->
+        <config-file parent="/manifest/application" target="AndroidManifest.xml">
+            <meta-data
+                android:name="com.hihonor.push.app_id"
+                android:value="$APP_ID" />
+            <service
+                android:name="com.shadowhunter.push.honor.MyHonorMsgService"
+                android:exported="false">
+                <intent-filter>
+                    <action android:name="com.hihonor.push.action.MESSAGING_EVENT" />
+                </intent-filter>
+            </service>
+        </config-file>
+        <config-file parent="/*" target="AndroidManifest.xml"></config-file>
+        <framework custom="true" src="src/android/compile.gradle" type="gradleReference" />
+        <source-file src="src/android/HonorPush.java"
+            target-dir="src/com/shadowhunter/push/honor/" />
+        <source-file src="src/android/MyHonorMsgService.java"
+            target-dir="src/com/shadowhunter/push/honor/" />
+    </platform>
+</plugin>
