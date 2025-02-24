@@ -9,3 +9,7 @@ android {
         }
     }
 }
+
+repositories {
+    maven {url 'https://developer.hihonor.com/repo'}
+}
