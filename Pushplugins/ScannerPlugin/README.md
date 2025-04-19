@@ -6,7 +6,7 @@
  
 
 ``` shell
- cordova plugin add ScannerPlugin
+ cordova plugin add {Your local path}/ScannerPlugin
 ```
 
 ## 使用
