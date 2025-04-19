@@ -23,8 +23,8 @@ HonorPush.prototype = {
     }
 }
 
-if (!HonorPush) [
+if (!HonorPush) {
     HonorPush = new HonorPush()
-]
+}
 
 module.exports = new HonorPush();

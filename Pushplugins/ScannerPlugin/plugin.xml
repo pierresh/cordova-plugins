@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="com.shadowhunter.scanner" version="1.0.0"
+    xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>ScannerPlugin</name>
+    <js-module name="ScannerPlugin" src="www/ScannerPlugin.js">
+        <clobbers target="ScannerPlugin" />
+    </js-module>
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="ScannerPlugin">
+                <param name="android-package" value="com.shadowhunter.scanner.ScannerPlugin" />
+            </feature>
+        </config-file>
+        <!--权限-->
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.CAMERA" />
+            <uses-permission android:name="android.permission.VIBRATE" />
+            <uses-permission android:name="android.permission.FLASHLIGHT" />
+        </config-file>
+        <config-file parent="/manifest/application" target="AndroidManifest.xml">
+            <activity android:name="com.shadowhunter.scanner.WeChatMultiQRCodeActivity"
+                android:theme="@style/CameraScanTheme"
+                android:exported="true"
+                android:screenOrientation="portrait">
+            </activity>
+        </config-file>
+        <config-file parent="/*" target="AndroidManifest.xml"></config-file>
+        <!-- arr引用 -->
+        <lib-file src="src/android/wechat-qrcode-scanning-release.aar" />
+        <!--gradle-->
+        <framework src="src/android/compile.gradle" custom="true" type="gradleReference" />
+        <!--java-->
+        <source-file src="src/android/ScannerPlugin.java"
+            target-dir="src/com/shadowhunter/scanner" />
+        <source-file src="src/android/WeChatMultiQRCodeActivity.java"
+            target-dir="src/com/shadowhunter/scanner" />
+    </platform>
+</plugin>
