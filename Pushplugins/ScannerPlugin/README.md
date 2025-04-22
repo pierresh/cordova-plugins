@@ -30,6 +30,6 @@ ScannerPlugin.scan(function(res) {
     console.log(res); // 扫描结果
 }, function(err) {
       console.log(err);
-},[]);
+},["底部文字"]);
 ```
 

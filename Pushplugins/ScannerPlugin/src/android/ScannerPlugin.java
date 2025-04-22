@@ -32,7 +32,11 @@ public class ScannerPlugin extends CordovaPlugin {
 
         if (action.equals("scan")){
             this.callbackContext  = callbackContext;
+
             Intent intent = new Intent(this.cordova.getActivity(), WeChatMultiQRCodeActivity.class);
+            if (args.length() != 0) {
+                intent.putExtra("bottomText", args.getString(0));
+            }
             cordova.startActivityForResult(this, intent, REQUEST_CODE);
             return true;
         }

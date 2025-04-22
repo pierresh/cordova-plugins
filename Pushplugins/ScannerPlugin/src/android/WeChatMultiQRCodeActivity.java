@@ -2,6 +2,7 @@ package com.shadowhunter.scanner;
 
 import android.content.Intent;
 import android.graphics.Point;
+import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -20,6 +21,14 @@ import java.util.Objects;
 
 public class WeChatMultiQRCodeActivity extends WeChatCameraScanActivity {
     private static final String TAG = "WeChatMultiQRCodeActivity";
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        String bottomText = intent.getStringExtra("bottomText");
+        setBottomText(bottomText);
+    }
+
     @Override
     public void onScanResultCallback(AnalyzeResult<List<String>> result) {
         getCameraScan().setAnalyzeImage(false);
