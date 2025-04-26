@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 
@@ -31,7 +32,11 @@ public class WeChatMultiQRCodeActivity extends WeChatCameraScanActivity {
 
     @Override
     public void onScanResultCallback(AnalyzeResult<List<String>> result) {
+        ivFlashlight.setVisibility(View.GONE);
+
         getCameraScan().setAnalyzeImage(false);
+
+        getCameraScan().stopCamera();
 
 
         if (result instanceof WeChatScanningAnalyzer.QRCodeAnalyzeResult){
