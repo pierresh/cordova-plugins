@@ -3,6 +3,7 @@ package com.shadowhunter.scanner;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
@@ -37,6 +38,7 @@ public class WeChatMultiQRCodeActivity extends WeChatCameraScanActivity {
         getCameraScan().setAnalyzeImage(false);
 
         getCameraScan().stopCamera();
+
 
 
         if (result instanceof WeChatScanningAnalyzer.QRCodeAnalyzeResult){
@@ -83,16 +85,10 @@ public class WeChatMultiQRCodeActivity extends WeChatCameraScanActivity {
             viewfinderView.showResultPoints(points);
 
             if (result.getResult().size() == 1) {
-                Intent intent = new Intent();
-                intent.putExtra(CameraScan.SCAN_RESULT, result.getResult().get(0));
-                setResult(RESULT_OK, intent);
-                finish();
+                handleResult(result.getResult().get(0));
             }
         }else{
-            Intent intent = new Intent();
-            intent.putExtra(CameraScan.SCAN_RESULT, result.getResult().get(0));
-            setResult(RESULT_OK, intent);
-            finish();
+            handleResult(result.getResult().get(0));
         }
     }
 
@@ -102,9 +98,16 @@ public class WeChatMultiQRCodeActivity extends WeChatCameraScanActivity {
         return new WeChatScanningAnalyzer(true);
     }
 
-//    @Override
-//    public int getViewfinderViewId() {
-//        return ViewfinderView.NO_ID;
-//    }
+    private void handleResult(String result){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent();
+                intent.putExtra(CameraScan.SCAN_RESULT, result);
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        }, 500);
+    }
 
 }
