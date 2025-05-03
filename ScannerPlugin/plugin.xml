@@ -36,4 +36,22 @@
         <source-file src="src/android/WeChatMultiQRCodeActivity.java"
             target-dir="src/com/shadowhunter/scanner" />
     </platform>
+
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="ScannerPlugin">
+                <param name="ios-package" value="ScannerPlugin" />
+            </feature>
+        </config-file>
+
+        <!-- Add bridging header and Swift compatibility -->
+        <header-file src="src/ios/ScannerPlugin-Bridging-Header.h" />
+        <source-file src="src/ios/ScannerPlugin.swift" />
+        <source-file src="src/ios/ScannerPluginTarget.swift"/>
+        <source-file src="src/ios/ScannerPluginGesture.swift"/>
+        <source-file src="src/ios/ScannerPluginMetadataDelegate.swift"/>
+        <source-file src="src/ios/PaddedLabel.swift"/>
+
+        <hook type="after_prepare" src="scripts/add-swift-support.js" />
+    </platform>
 </plugin>
